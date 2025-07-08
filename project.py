@@ -3,10 +3,11 @@ import csv
 import sys
 from tabulate import tabulate
 import pandas as pd
+from pathlib import Path
 
 
 def main():
-    check_file()
+    file = check_file()
     welcome = Figlet(font="slant")
     print(welcome.renderText("Welcome to your TV series manager!"))
     create_add()
@@ -14,22 +15,19 @@ def main():
 
 def check_file():
     try:
-        if len(sys.argv) > 2:
-            sys.exit("Too many command-line arguments")
+        if len(sys.argv) != 2:
+            sys.exit("Command-line argument must contain a .csv file")
 
-        elif len(sys.argv) == 1:
-            sys.exit("Too few command-line arguments")
+        if not sys.argv[1].lower().endswith(".csv"):
+            sys.exit("Not a .csv file.")
 
-        elif (sys.argv[1]).lower().split(".")[1] != "csv":
-            try:
-                with open(sys.argv[1]) as file:
-                    sys.exit(
-                        "Not a .csv file")
-            except FileNotFoundError:
-                sys.exit(
-                    "Either input an existing .csv file or create a new .csv file")
+        if not Path(sys.argv[1]).exists():
+            print(f"Cannot find file. File {sys.argv[1]} will be created.")
+            return sys.argv[1]
+
         else:
-            return True
+            return sys.argv[1]
+
     except IndexError:
         sys.exit("Either input an existing .csv file or create a new .csv file")
 
@@ -48,34 +46,36 @@ def create_add():
 
 def open_file():
     while True:
-        add_information = input(
-            "Do you want to add a new series? (yes/no) ")
+        add_information = input("Do you want to add a new series? (yes/no) ")
 
         if add_information == "yes":
             try:
-                with open(sys.argv[1], newline='') as f:
+                with open(sys.argv[1], newline="") as f:
                     reader = csv.reader(f)
                     row_1 = next(reader)
                     if row_1 != ["Series", "Rating", "Info"]:
                         df = pd.read_csv(sys.argv[1], header=None)
-                        df.to_csv(sys.argv[1], header=[
-                            "Series", "Rating", "Info"], index=False)
+                        df.to_csv(
+                            sys.argv[1],
+                            header=["Series", "Rating", "Info"],
+                            index=False,
+                        )
             except:
                 with open(sys.argv[1], "w") as file:
                     fieldnames = ["Series", "Rating", "Info"]
                     writer = csv.DictWriter(file, fieldnames=fieldnames)
                     writer.writeheader()
 
-            series, rating, info = get_information()
-            with open(sys.argv[1], "a") as file:
-                fieldnames = ["Series", "Rating", "Info"]
-                writer = csv.DictWriter(
-                    file, fieldnames=fieldnames)
-                writer.writerow(
-                    {"Series": series, "Rating": rating, "Info": info})
+                series, rating, info = get_information()
+                with open(sys.argv[1], "a") as file:
+                    fieldnames = ["Series", "Rating", "Info"]
+                    writer = csv.DictWriter(file, fieldnames=fieldnames)
+                    writer.writerow(
+                        {"Series": series, "Rating": rating, "Info": info})
         elif add_information == "no":
             show_quit = input(
-                "Do you want to see your list or quit the program? (see/quit) ")
+                "Do you want to see your list or quit the program? (see/quit) "
+            )
             if show_quit == "see":
                 show_file()
                 break
