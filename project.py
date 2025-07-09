@@ -41,7 +41,7 @@ def check_file():
 
         if not Path(sys.argv[1]).exists():
             print(f"Cannot find file. File {sys.argv[1]} will be created.")
-            new_file = create_file()
+            create_file()
             return sys.argv[1]
 
         else:
