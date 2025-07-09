@@ -62,7 +62,6 @@ def user_add_quit(filename):
 
         if add_series == "yes":
             add_information(filename)
-            print(f"")
 
         elif add_series == "no":
             show_quit = input(
