@@ -1,9 +1,8 @@
-from pyfiglet import Figlet
+
 import csv
 import sys
 import pytest
 from tabulate import tabulate
-import pandas as pd
 from pathlib import Path
 from project import check_file
 from project import get_information
