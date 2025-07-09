@@ -194,5 +194,7 @@ cython_debug/
 .cursorindexingignore
 
 # Own files
-.key
-.csv
+"CS50P-final project.key"
+"existing_list_without_header.csv"
+*.key
+*.csv
