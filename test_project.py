@@ -1,9 +1,6 @@
-
 import csv
 import sys
 import pytest
-from tabulate import tabulate
-from pathlib import Path
 from project import check_file
 from project import get_information
 from project import create_file
