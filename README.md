@@ -41,5 +41,28 @@ Where `<filename.csv>` is the name of the `.csv` file you want to create or use.
 - Ratings must be numeric and between 1 to 5.
 - The tabular view of the series uses the `tabulate` library for formatting.
 
+## Testing
+
+To ensure the functionality of the program, unit tests have been written using `pytest`. Follow these steps to run the tests:
+
+### Prerequisites
+- Ensure `pytest` is installed:
+  ```bash
+  pip install pytest
+  ```
+
+### Running Tests
+Run all tests by executing the following command in the terminal:
+```bash
+pytest test_project.py
+```
+
+### Test Coverage
+The tests cover the following functionalities:
+- Validation of command-line arguments (`check_file` function).
+- Creation of a new `.csv` file (`create_file` function).
+- Adding and validating user input (`get_information` function).
+- Ensuring proper headers in the `.csv` file.
+
 ## License
 This project is licensed under the MIT License.
